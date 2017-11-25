@@ -3,15 +3,19 @@
     <head>
         <meta charset="utf-8">
         <title>Settings</title>
+        <script src="//static.parastorage.com/services/third-party/react/15.3.1/react-with-addons.min.js"></script>
+        <script src="//static.parastorage.com/services/third-party/react/15.3.1/react-dom.min.js"></script>
         <script src="//static.parastorage.com/services/third-party/jquery/3.1.1/dist/jquery.min.js"></script>
         <script src="//static.parastorage.com/services/third-party/lodash/4.17.2/lodash.js"></script>
         <script src="//static.parastorage.com/services/js-sdk/1.87.0/js/wix.min.js"></script>
         <script src="//static.parastorage.com/services/editor-ui-lib/1.28.0/lib/editor-ui-lib-jquery.min.js"></script>
     </head>
     <body>
+        <div wix-ctrl="appSettings"></div>
         <div id="sampleDock" wix-ctrl="Dock"
              wix-options="{title: 'Select position', defaultValue:'TOP_RIGHT'}">
         </div>
+        <hr class="divider-long">
         <div id="textInputWithButton"
              wix-ctrl="TextInputWithButton"
              wix-options="{

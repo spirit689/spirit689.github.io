@@ -40,7 +40,7 @@
         Widget.prototype.initWidget = function() {
             var $self = this;
             $self.cfg.isReady = false;
-            Wix.getBoundingRectAndOffsets(function(data){
+            Wix.getBoundingRectAndOffsets(function(data) {
                 $self.cfg.height = data.offsets.y + data.rect.height;
                 $self.cfg.width = data.offsets.x + data.rect.width;
                 $self.cfg.isReady = true;
@@ -90,6 +90,7 @@
 
             jQuery(widget.cfg.classRestore).on('click', function(ev) {
                 ev.preventDefault();
+                console.log(widget.cfg);
                 setTimeout(function () {
                     widget.restoreSize();
                 }, widget.cfg.delay);
