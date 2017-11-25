@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script type="text/javascript" src="//static.parastorage.com/services/js-sdk/1.87.0/js/wix.min.js"></script>
+    <script src="//static.parastorage.com/services/third-party/jquery/3.1.1/dist/jquery.min.js"></script>
+    <script src="//static.parastorage.com/services/third-party/lodash/4.17.2/lodash.js"></script>
+    <style>
+        * { margin: 0; padding: 0; }
+        body { width: 100%; height: 100%; background: red; }
+        body.editor {
+            background: #FFFFFF;
+        }
+        .button {
+            background-color: #ccc;
+            padding: 10px;
+            margin: 5px;
+            display: inline-block;
+        }
+    </style>
+    <script type="text/javascript">
+        //-----------------
+        var Widget = function() {
+            this.cfg = {
+                content: '<span style="color:red;" class="button expand">EXPAND</span><span style="color:red;" class="button restore">RESTORE</span>',
+                isReady: false,
+                delay: 500,
+                classExpand: '.expand',
+                classRestore: '.restore',
+                classHide: '.hide',
+            }
+        }
+
+        Widget.prototype.isReady = function () {
+            return cfg.isReady;
+        }
+
+        Widget.prototype.initWidget = function() {
+            var $self = this;
+            $self.cfg.isReady = false;
+            Wix.getBoundingRectAndOffsets(function(data){
+                $self.cfg.height = data.offsets.y + data.rect.height;
+                $self.cfg.width = data.offsets.x + data.rect.width;
+                $self.cfg.isReady = true;
+            });
+            Wix.addEventListener(Wix.Events.EDIT_MODE_CHANGE, function () {
+                widget.changeContent();
+            });
+            Wix.addEventListener(Wix.Events.PAGE_NAVIGATION, function () {
+                location.reload();
+            });
+        }
+
+        Widget.prototype.setSize = function(w, h) {
+            Wix.resizeWindow(w, h);
+        }
+
+        Widget.prototype.expandSize = function() {
+            Wix.resizeWindow(window.screen.width, window.screen.height);
+        }
+
+        Widget.prototype.restoreSize = function() {
+            Wix.resizeWindow(this.cfg.width, this.cfg.height);
+        }
+
+        Widget.prototype.changeContent = function () {
+            var mode = Wix.Utils.getViewMode();
+            jQuery('body').attr('class', Wix.Utils.getViewMode());
+            if(mode == 'editor') {
+                jQuery('.content').remove();
+                jQuery('body').append('<div class="placeholder">[Widget]</div>');
+            } else {
+                jQuery('.placeholder').remove();
+                jQuery('body').append('<div class="content">' + this.cfg.content + '</div>');
+            }
+        }
+        //-----------------
+        var widget = new Widget();
+
+        jQuery(document).ready(function() {
+            widget.initWidget();
+            widget.changeContent();
+
+            jQuery(widget.cfg.classExpand).on('click', function(ev) {
+                ev.preventDefault();
+                widget.expandSize();
+            });
+
+            jQuery(widget.cfg.classRestore).on('click', function(ev) {
+                ev.preventDefault();
+                setTimeout(function () {
+                    widget.restoreSize();
+                }, widget.cfg.delay);
+            });
+        });
+    </script>
+</head>
+<body>
+</body>
+</html>
