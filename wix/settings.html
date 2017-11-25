@@ -9,6 +9,28 @@
         <script src="//static.parastorage.com/services/third-party/lodash/4.17.2/lodash.js"></script>
         <script src="//static.parastorage.com/services/js-sdk/1.87.0/js/wix.min.js"></script>
         <script src="//static.parastorage.com/services/editor-ui-lib/1.28.0/lib/editor-ui-lib-jquery.min.js"></script>
+        <script type="text/javascript">
+            var Settings = function () {};
+
+            Settings.prototype.update = function (key, val) {
+                Wix.Settings.triggerSettingsUpdatedEvent({key: key, value: val});
+            };
+
+            Settings.prototype.attachListeners = function () {
+                var $self = this;
+                jQuery('[wix-ctrl]').each(function (index, element) {
+                    jQuery(this).getCtrl().onChange(function (value) {
+                        $self.update($element.attr('wix-param'), value);
+                    });
+                });
+            }
+
+            var settings = new Settings();
+
+            jQuery(document).ready(function() {
+                settings.attachListeners();
+            });
+        </script>
     </head>
     <body>
         <div wix-ctrl="appSettings"></div>
@@ -16,16 +38,12 @@
              wix-options="{title: 'Select position', defaultValue:'TOP_RIGHT'}">
         </div>
         <hr class="divider-long">
-        <div id="textInputWithButton"
-             wix-ctrl="TextInputWithButton"
-             wix-options="{
-             title: 'Text input with button',
-             placeholder:'Fill the emptiness',
-             infoText:'Knowledge is power, this is just a text info',
-             invalidMessage:'Invalid Input.',
-             defaultText:'This is text input',
-             maxLength:10,
-             buttonText: 'confirm'}">
+        <div id="textInput" wix-ctrl="Input"
+            wix-options="{ placeholder: 'Code', title: 'Input TItle', infoText: 'Tooltip Text', isMultiLine: 'true', invalidMessage: 'Wrong Input!' }">
+        </div>
+        <hr class="divider-long">
+        <div id="sampleButton" wix-ctrl="Button"
+            wix-options="{label: 'Apply', className: 'btn-confirm-primary', icon: 'image-change'}">
         </div>
     </body>
 </html>
