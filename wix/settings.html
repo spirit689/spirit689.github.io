@@ -37,43 +37,16 @@
         <div wix-ctrl="appSettings"></div>
         <div wix-ctrl="panelTabs" wix-options="{defaultTabIndex:0}">
             <div tab="Settings">
-                <div id="textInputExpand"
+                <div id="textInputID"
                      class="text-input-field"
                      wix-ctrl="TextInputWithButton"
-                     wix-param="classExpand"
+                     wix-param="textID"
                      wix-options="{
-                     title: 'Expand Selector',
-                     placeholder:'',
+                     title: 'Chain ID',
+                     placeholder:'Chain ID',
                      infoText:'',
                      invalidMessage:'',
                      defaultText:'',
-                     maxLength:128,
-                     buttonText: 'OK'}">
-                </div>
-                <div id="textInputRestore"
-                     class="text-input-field"
-                     wix-ctrl="TextInputWithButton"
-                     wix-param="classRestore"
-                     wix-options="{
-                     title: 'Restore Selector',
-                     placeholder:'',
-                     infoText:'',
-                     invalidMessage:'Wrong Input!',
-                     defaultText:'',
-                     maxLength:128,
-                     buttonText: 'OK'}">
-                </div>
-                <div id="textInputCode"
-                     class="text-input-field"
-                     wix-ctrl="TextInputWithButton"
-                     wix-param="textCode"
-                     wix-options="{
-                     title: 'HTML',
-                     placeholder:'Your text',
-                     infoText:'',
-                     isMultiLine: 'true',
-                     invalidMessage:'',
-                     defaultText:'Widget text',
                      maxLength:512,
                      buttonText: 'OK'}">
                 </div>

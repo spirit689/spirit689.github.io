@@ -23,7 +23,8 @@
         var Widget = function() {
             this.cfg = {
                 delay: 500,
-                data: {}
+                classExpand: '.ScrollTopButton',
+                classRestore: '.AppsPromoter .scroll-fab',
             }
         }
 
@@ -32,12 +33,10 @@
             Wix.getBoundingRectAndOffsets(function(data) {
                 $self.cfg.height = data.rect.height;
                 $self.cfg.width = data.rect.width;
-                // console.log('rect data', data);
             });
         }
 
         Widget.prototype.setSize = function(w, h) {
-            // console.log('set size' + w + ':' + h);
             Wix.resizeWindow(w, h);
         }
 
@@ -45,30 +44,37 @@
             var $self = this;
             var mode = Wix.Utils.getViewMode();
             jQuery('body').attr('class', Wix.Utils.getViewMode());
-            // console.log('mode ', mode);
             if(mode == 'editor' || mode == 'preview') {
                 jQuery('.placeholder').show();
                 jQuery('.content').html('');
             } else {
                 jQuery('.placeholder').hide();
-                Wix.Data.Public.get('appSettings', { scope: 'COMPONENT' },
-                function(data) {
-                    console.log('data get ', data);
-                    if(data['appSettings']['textCode']) {
-                        jQuery('.content').html(data['appSettings']['textCode']);
-                    }
-                    if(data['appSettings']['classExpand']) {
-                        $self.cfg.classExpand = data['appSettings']['classExpand'];
-                    }
-                    if(data['appSettings']['classRestore']) {
-                        $self.cfg.classRestore = data['appSettings']['classRestore'];
-                    }
-                    $self.attachListeners();
-                }, function(f) {
-                    console.log('data get error', f);
-                    jQuery('.content').html('Something wrong see log :(');
-                });
             }
+
+            Wix.Data.Public.get('textID', { scope: 'COMPONENT' },
+            function(data) {
+                console.log('data get ', data);
+                if(data['textID']) {
+                    window.appsConfig = {
+                        "apiDomain": "ru.foodsoul.pro",
+                        "position": "topRight",
+                        "transformButton": false,
+                        "orientation": "horizontal",
+                        "buttonTitle": "default",
+                        "popupTitle": "default",
+                        "delay": 100,
+                        "chainId": data['textID'],
+                        "buttonOffsetVertical": 24,
+                        "buttonOffsetHorizontal": 24,
+                        "backgroundUrl": "https://static.foodsoul.pro/apps-promoter/images/backgrounds/city_1.jpg"
+                    };
+                    jQuery('.content').append('<script src="https://static.foodsoul.pro/apps-promoter/dist/apps-promoter.js" async></script>');
+                }
+                $self.attachListeners();
+            }, function(f) {
+                console.log('data get error', f);
+                jQuery('.content').html('[ERROR]');
+            });
         }
 
         Widget.prototype.attachListeners = function() {
@@ -90,26 +96,11 @@
 
         Wix.addEventListener(Wix.Events.SETTINGS_UPDATED, function (data) {
             console.log('settings ', data);
-            widget.cfg.data[data.key] = data.value;
-            Wix.Data.Public.set('appSettings', widget.cfg.data, { scope: 'COMPONENT' },
-            function(d){console.log('data set ', d)}, function(f){ console.log('data set error ', f)});
-            // if(data.key == 'textCode') {
-            //     Wix.Data.Public.set('textCode', data.value, { scope: 'COMPONENT' },
-            //     function(d){console.log('data set ', d)}, function(f){ console.log('data set error ', f)});
-            // }
-            // if(data.key == 'classExpand') {
-            //     Wix.Data.Public.set('classExpand', data.value, { scope: 'COMPONENT' },
-            //     function(d){console.log('data set ', d)}, function(f){ console.log('data set error ', f)});
-            // }
-            // if(data.key == 'classRestore') {
-            //     Wix.Data.Public.set('classRestore', data.value, { scope: 'COMPONENT' },
-            //     function(d){console.log('data set ', d)}, function(f){ console.log('data set error ', f)});
-            // }
+            if(data.key == 'textID') {
+                Wix.Data.Public.set('textID', data.value, { scope: 'COMPONENT' },
+                function(d){console.log('data set ', d)}, function(f){ console.log('data set error ', f)});
+            }
         });
-
-        // Wix.addEventListener(Wix.Events.STYLE_PARAMS_CHANGE, function (data) {
-        //     console.log('style ', data);
-        // });
 
         Wix.addEventListener(Wix.Events.EDIT_MODE_CHANGE, function () {
             widget.changeContent();
