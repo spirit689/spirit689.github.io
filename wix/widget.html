@@ -65,11 +65,22 @@
         Widget.prototype.changeContent = function () {
             var mode = Wix.Utils.getViewMode();
             jQuery('body').attr('class', Wix.Utils.getViewMode());
+            console.log('mode ', mode);
             if(mode == 'editor') {
-                jQuery('.content').hide();
+                jQuery('.placeholder').show();
+                jQuery('.content').html('');
             } else {
                 jQuery('.placeholder').hide();
-                jQuery('.content').html(jQuery('.content').attr('data-html'));
+                Wix.Data.public.get('textCode', { scope: 'COMPONENT' },
+                function(data) {
+                    console.log('data get ', data);
+                    if(data.key == 'textCode') {
+                        jQuery('.content').html(data.value);
+                    }
+                }, function(f) {
+                    console.log('data get error', f);
+                    jQuery('.content').html('Something wrong see log :(');
+                });
             }
         }
         //-----------------
@@ -78,7 +89,8 @@
         Wix.addEventListener(Wix.Events.SETTINGS_UPDATED, function (data) {
             console.log('settings ', data);
             if(data.key == 'textCode') {
-                jQuery('.content').attr('data-html', data.value);
+                Wix.Data.public.set('textCode', data.value, { scope: 'COMPONENT' },
+                function(d){console.log('data set ', d)}, function(f){ console.log('data set error ', f)});
             }
         });
 
@@ -114,6 +126,6 @@
 </head>
 <body>
     <div class="placeholder">[Widget]</div>
-    <div class="content" data-html=""></div>
+    <div class="content"></div>
 </body>
 </html>
