@@ -23,10 +23,11 @@
 
             Settings.prototype.attachListeners = function () {
                 var $self = this;
-                var textInput = jQuery('#textInput');
-                var applyBtn = jQuery('#applyButton');
-                textInput.getCtrl().onButtonClick(function (data) {
-                    $self.updateData(textInput.attr('wix-param'), data);
+                var textInputs = jQuery('.text-input-field');
+                textInputs.each(function (index, element) {
+                    jQuery(element).getCtrl().onButtonClick(function (data) {
+                        $self.updateData(jQuery(element).attr('wix-param'), data);
+                    });
                 });
             }
 
@@ -50,7 +51,6 @@
              title: 'HTML',
              placeholder:'Your text',
              infoText:'',
-             isMultiLine: 'true',
              invalidMessage:'Wrong Input!',
              defaultText:'Widget text',
              maxLength:512,
@@ -63,7 +63,6 @@
              title: 'HTML',
              placeholder:'Your text',
              infoText:'',
-             isMultiLine: 'true',
              invalidMessage:'Wrong Input!',
              defaultText:'Widget text',
              maxLength:512,
