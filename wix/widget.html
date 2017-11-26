@@ -40,8 +40,8 @@
             var $self = this;
             $self.cfg.isReady = false;
             Wix.getBoundingRectAndOffsets(function(data) {
-                $self.cfg.height = data.offsets.y + data.rect.height;
-                $self.cfg.width = data.offsets.x + data.rect.width;
+                $self.cfg.height = data.rect.height;
+                $self.cfg.width = data.rect.width;
                 $self.cfg.isReady = true;
                 console.log('rect data', data);
             });
@@ -58,11 +58,17 @@
         Widget.prototype.expandSize = function() {
             console.log('screen', window.screen);
             console.log('cfg', this.cfg);
-            Wix.resizeWindow(window.screen.width, window.screen.height);
+            Wix.resizeComponent({
+                width: window.screen.width,
+                height: window.screen.height
+            });
         }
 
         Widget.prototype.restoreSize = function() {
-            Wix.resizeWindow(this.cfg.width, this.cfg.height);
+            Wix.resizeComponent({
+                width: this.cfg.width,
+                height: this.cfg.height
+            });
         }
 
         Widget.prototype.changeContent = function () {
