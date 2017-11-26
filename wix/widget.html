@@ -66,11 +66,10 @@
             var mode = Wix.Utils.getViewMode();
             jQuery('body').attr('class', Wix.Utils.getViewMode());
             if(mode == 'editor') {
-                jQuery('.content').remove();
-                jQuery('body').append('<div class="placeholder">[Widget]</div>');
+                jQuery('.content').hide();
             } else {
-                jQuery('.placeholder').remove();
-                jQuery('body').append('<div class="content">' + this.cfg.content + '</div>');
+                jQuery('.placeholder').hide();
+                jQuery('.content').html(jQuery('.content').attr('data-html'));
             }
         }
         //-----------------
@@ -79,7 +78,7 @@
         Wix.addEventListener(Wix.Events.SETTINGS_UPDATED, function (data) {
             console.log('settings ', data);
             if(data.key == 'textCode') {
-                widget.cfg.content = data.value;
+                jQuery('.content').attr('data-html', data.value);
             }
         });
 
@@ -114,5 +113,7 @@
     </script>
 </head>
 <body>
+    <div class="placeholder">[Widget]</div>
+    <div class="content" data-html=""></div>
 </body>
 </html>
