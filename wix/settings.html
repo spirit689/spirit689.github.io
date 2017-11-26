@@ -17,20 +17,16 @@
         <script type="text/javascript">
             var Settings = function () {};
 
-            Settings.prototype.update = function (key, val) {
+            Settings.prototype.updateData = function (key, val) {
                 Wix.Settings.triggerSettingsUpdatedEvent({key: key, value: val});
             };
 
             Settings.prototype.attachListeners = function () {
                 var $self = this;
-                console.log($self);
-                jQuery('[wix-ctrl]').each(function (index, element) {
-                    var callback = jQuery(element).getCtrl().onChange;
-                    if(jQuery.isFunction(callback)) {
-                        callback(function (value) {
-                            $self.update(jQuery(element).attr('wix-param'), value);
-                        });
-                    }
+                var textInput = jQuery('#textInput');
+                var applyBtn = jQuery('#applyButton');
+                textInput.getCtrl().onChange(function (data) {
+                    $self.updateData(textInput.attr('wix-param'), data);
                 });
             }
 
@@ -43,16 +39,9 @@
     </head>
     <body>
         <div wix-ctrl="appSettings"></div>
-        <div id="sampleDock" wix-ctrl="Dock"
-             wix-options="{title: 'Select position', defaultValue:'TOP_RIGHT'}">
-        </div>
-        <hr class="divider-long">
         <div id="textInput" wix-ctrl="Input"
-            wix-options="{ placeholder: 'Code', title: 'Input TItle', infoText: 'Tooltip Text', isMultiLine: 'true', invalidMessage: 'Wrong Input!' }">
-        </div>
-        <hr class="divider-long">
-        <div id="sampleButton" wix-ctrl="Button"
-            wix-options="{label: 'Apply', className: 'btn-confirm-primary', icon: 'image-change'}">
+            wix-param="textCode"
+            wix-options="{ placeholder: 'Your text', title: 'HTML', infoText: 'Enter code here', isMultiLine: 'true', invalidMessage: 'Wrong Input!' }">
         </div>
     </body>
 </html>
