@@ -45,6 +45,15 @@
                 $self.cfg.width = data.offsets.x + data.rect.width;
                 $self.cfg.isReady = true;
             });
+
+            Wix.Settings.getStyleParams(function(data) {
+                console.log('style ', data);
+            });
+
+            Wix.addEventListener(Wix.Events.SETTINGS_UPDATED, function (data) {
+                console.log('settings ', data);
+            });
+
             Wix.addEventListener(Wix.Events.EDIT_MODE_CHANGE, function () {
                 widget.changeContent();
             });
