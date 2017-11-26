@@ -71,7 +71,7 @@
                 jQuery('.content').html('');
             } else {
                 jQuery('.placeholder').hide();
-                Wix.Data.public.get('textCode', { scope: 'COMPONENT' },
+                Wix.Data.Public.get('textCode', { scope: 'COMPONENT' },
                 function(data) {
                     console.log('data get ', data);
                     if(data.key == 'textCode') {
@@ -89,7 +89,7 @@
         Wix.addEventListener(Wix.Events.SETTINGS_UPDATED, function (data) {
             console.log('settings ', data);
             if(data.key == 'textCode') {
-                Wix.Data.public.set('textCode', data.value, { scope: 'COMPONENT' },
+                Wix.Data.Public.set('textCode', data.value, { scope: 'COMPONENT' },
                 function(d){console.log('data set ', d)}, function(f){ console.log('data set error ', f)});
             }
         });
