@@ -24,7 +24,6 @@
         //-----------------
         var Widget = function() {
             this.cfg = {
-                content: '<span style="color:red;" class="button expand">EXPAND</span><span style="color:red;" class="button restore">RESTORE</span>',
                 isReady: false,
                 delay: 500,
                 classExpand: '.expand',
@@ -80,7 +79,7 @@
         Wix.addEventListener(Wix.Events.SETTINGS_UPDATED, function (data) {
             console.log('settings ', data);
             if(data.key == 'textCode') {
-                this.cfg.content = data.value;
+                widget.cfg.content = data.value;
             }
         });
 
