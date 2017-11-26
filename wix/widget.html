@@ -49,35 +49,34 @@
                 jQuery('.content').html('');
             } else {
                 jQuery('.placeholder').hide();
+                Wix.Data.Public.get('textID', { scope: 'COMPONENT' },
+                function(data) {
+                    console.log('data get ', data);
+                    if(data['textID']) {
+                        window.appsConfig = {
+                            "apiDomain": "ru.foodsoul.pro",
+                            "position": "topRight",
+                            "transformButton": false,
+                            "orientation": "horizontal",
+                            "buttonTitle": "default",
+                            "popupTitle": "default",
+                            "delay": 100,
+                            "chainId": data['textID'],
+                            "buttonOffsetVertical": 24,
+                            "buttonOffsetHorizontal": 24,
+                            "backgroundUrl": "https://static.foodsoul.pro/apps-promoter/images/backgrounds/city_1.jpg"
+                        };
+                        var scr = document.createElement('script');
+                        scr.type = 'text/javascript';
+                        scr.src = 'https://static.foodsoul.pro/apps-promoter/dist/apps-promoter.js';
+                        document.body.appendChild(scr);
+                    }
+                    $self.attachListeners();
+                }, function(f) {
+                    console.log('data get error', f);
+                    jQuery('.content').html('[ERROR]');
+                });
             }
-
-            Wix.Data.Public.get('textID', { scope: 'COMPONENT' },
-            function(data) {
-                console.log('data get ', data);
-                if(data['textID']) {
-                    window.appsConfig = {
-                        "apiDomain": "ru.foodsoul.pro",
-                        "position": "topRight",
-                        "transformButton": false,
-                        "orientation": "horizontal",
-                        "buttonTitle": "default",
-                        "popupTitle": "default",
-                        "delay": 100,
-                        "chainId": data['textID'],
-                        "buttonOffsetVertical": 24,
-                        "buttonOffsetHorizontal": 24,
-                        "backgroundUrl": "https://static.foodsoul.pro/apps-promoter/images/backgrounds/city_1.jpg"
-                    };
-                    var scr = document.createElement('script');
-                    scr.type = 'text/javascript';
-                    scr.src = 'https://static.foodsoul.pro/apps-promoter/dist/apps-promoter.js';
-                    document.body.appendChild(scr);
-                }
-                $self.attachListeners();
-            }, function(f) {
-                console.log('data get error', f);
-                jQuery('.content').html('[ERROR]');
-            });
         }
 
         Widget.prototype.attachListeners = function() {
