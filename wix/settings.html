@@ -40,46 +40,57 @@
     </head>
     <body>
         <div wix-ctrl="appSettings"></div>
-        <div id="sampleDock" wix-ctrl="Dock"
-            wix-param="widgetPos"
-            wix-options="{title: 'Select position', defaultValue:'TOP_RIGHT'}">
-        </div>
-        <div id="textInputExpand"
-             wix-ctrl="TextInputWithButton"
-             wix-param="classExpand"
-             wix-options="{
-             title: 'HTML',
-             placeholder:'Your text',
-             infoText:'',
-             invalidMessage:'Wrong Input!',
-             defaultText:'Widget text',
-             maxLength:512,
-             buttonText: 'OK'}">
-        </div>
-        <div id="textInputRestore"
-             wix-ctrl="TextInputWithButton"
-             wix-param="classRestore"
-             wix-options="{
-             title: 'HTML',
-             placeholder:'Your text',
-             infoText:'',
-             invalidMessage:'Wrong Input!',
-             defaultText:'Widget text',
-             maxLength:512,
-             buttonText: 'OK'}">
-        </div>
-        <div id="textInputCode"
-             wix-ctrl="TextInputWithButton"
-             wix-param="textCode"
-             wix-options="{
-             title: 'HTML',
-             placeholder:'Your text',
-             infoText:'',
-             isMultiLine: 'true',
-             invalidMessage:'Wrong Input!',
-             defaultText:'Widget text',
-             maxLength:512,
-             buttonText: 'OK'}">
+        <div wix-ctrl="panelTabs" wix-options="{defaultTabIndex:0}">
+            <div tab="Settings">
+                <div id="textInputExpand"
+                     class="text-input-field"
+                     wix-ctrl="TextInputWithButton"
+                     wix-param="classExpand"
+                     wix-options="{
+                     title: 'Expand Selector',
+                     placeholder:'',
+                     infoText:'',
+                     invalidMessage:'',
+                     defaultText:'',
+                     maxLength:128,
+                     buttonText: 'OK'}">
+                </div>
+                <div id="textInputRestore"
+                     class="text-input-field"
+                     wix-ctrl="TextInputWithButton"
+                     wix-param="classRestore"
+                     wix-options="{
+                     title: 'Restore Selector',
+                     placeholder:'',
+                     infoText:'',
+                     invalidMessage:'Wrong Input!',
+                     defaultText:'',
+                     maxLength:128,
+                     buttonText: 'OK'}">
+                </div>
+                <div id="textInputCode"
+                     class="text-input-field"
+                     wix-ctrl="TextInputWithButton"
+                     wix-param="textCode"
+                     wix-options="{
+                     title: 'HTML',
+                     placeholder:'Your text',
+                     infoText:'',
+                     isMultiLine: 'true',
+                     invalidMessage:'',
+                     defaultText:'Widget text',
+                     maxLength:512,
+                     buttonText: 'OK'}">
+                </div>
+            </div>
+            <div tab="Layout">
+                <div id="sampleDock"
+                    class="text-input-field"
+                    wix-ctrl="Dock"
+                    wix-param="widgetPos"
+                    wix-options="{title: 'Select position', defaultValue:'TOP_RIGHT'}">
+                </div>
+            </div>
         </div>
     </body>
 </html>
