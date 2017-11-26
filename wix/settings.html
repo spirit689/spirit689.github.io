@@ -24,7 +24,6 @@
             Settings.prototype.attachListeners = function () {
                 var $self = this;
                 jQuery('[wix-ctrl]').each(function (index, element) {
-                    var element = jQuery(this);
                     var callback = element.getCtrl().onChange;
                     if(jQuery.isFunction(callback)) {
                         callback(function (value) {
