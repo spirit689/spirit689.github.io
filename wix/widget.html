@@ -68,7 +68,10 @@
                         "buttonOffsetHorizontal": 24,
                         "backgroundUrl": "https://static.foodsoul.pro/apps-promoter/images/backgrounds/city_1.jpg"
                     };
-                    jQuery('.content').append('<script src="https://static.foodsoul.pro/apps-promoter/dist/apps-promoter.js" async></script>');
+                    var scr = document.createElement('script');
+                    scr.type = 'text/javascript';
+                    scr.src = 'https://static.foodsoul.pro/apps-promoter/dist/apps-promoter.js';
+                    document.body.appendChild(scr);
                 }
                 $self.attachListeners();
             }, function(f) {
