@@ -66,7 +66,7 @@
             var mode = Wix.Utils.getViewMode();
             jQuery('body').attr('class', Wix.Utils.getViewMode());
             console.log('mode ', mode);
-            if(mode == 'editor') {
+            if(mode == 'editor' || mode == 'preview') {
                 jQuery('.placeholder').show();
                 jQuery('.content').html('');
             } else {
@@ -74,8 +74,8 @@
                 Wix.Data.Public.get('textCode', { scope: 'COMPONENT' },
                 function(data) {
                     console.log('data get ', data);
-                    if(data.key == 'textCode') {
-                        jQuery('.content').html(data.value);
+                    if(data['textCode']) {
+                        jQuery('.content').html(data['textCode']);
                     }
                 }, function(f) {
                     console.log('data get error', f);
