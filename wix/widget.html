@@ -79,6 +79,9 @@
 
         Wix.addEventListener(Wix.Events.SETTINGS_UPDATED, function (data) {
             console.log('settings ', data);
+            if(data.key == 'textCode') {
+                this.cfg.content = data.value;
+            }
         });
 
         Wix.addEventListener(Wix.Events.STYLE_PARAMS_CHANGE, function (data) {
