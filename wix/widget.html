@@ -23,12 +23,12 @@
         var Widget = function() {
             this.cfg = {
                 delay: 500,
+                data: {}
             }
         }
 
         Widget.prototype.initWidget = function() {
             var $self = this;
-            $self.cfg.isReady = false;
             Wix.getBoundingRectAndOffsets(function(data) {
                 $self.cfg.height = data.rect.height;
                 $self.cfg.width = data.rect.width;
@@ -90,8 +90,8 @@
 
         Wix.addEventListener(Wix.Events.SETTINGS_UPDATED, function (data) {
             console.log('settings ', data);
-            widget.cfg[data.key] = data.value;
-            Wix.Data.Public.set('appSettings', widget.cfg, { scope: 'COMPONENT' },
+            widget.cfg.data[data.key] = data.value;
+            Wix.Data.Public.set('appSettings', widget.cfg.data, { scope: 'COMPONENT' },
             function(d){console.log('data set ', d)}, function(f){ console.log('data set error ', f)});
             // if(data.key == 'textCode') {
             //     Wix.Data.Public.set('textCode', data.value, { scope: 'COMPONENT' },
