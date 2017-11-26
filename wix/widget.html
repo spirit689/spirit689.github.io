@@ -108,19 +108,18 @@
         jQuery(document).ready(function() {
             widget.initWidget();
             widget.changeContent();
+        });
 
-            jQuery(widget.cfg.classExpand).on('click', function(ev) {
-                ev.preventDefault();
-                widget.expandSize();
-            });
+        jQuery(document).on('click', widget.cfg.classExpand, function(ev) {
+            ev.preventDefault();
+            widget.expandSize();
+        });
 
-            jQuery(widget.cfg.classRestore).on('click', function(ev) {
-                ev.preventDefault();
-                console.log(widget.cfg);
-                setTimeout(function () {
-                    widget.restoreSize();
-                }, widget.cfg.delay);
-            });
+        jQuery(document).on('click', widget.cfg.classRestore, function(ev) {
+            ev.preventDefault();
+            setTimeout(function () {
+                widget.restoreSize();
+            }, widget.cfg.delay);
         });
     </script>
 </head>
