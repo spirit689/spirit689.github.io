@@ -46,13 +46,12 @@
             jQuery('body').attr('class', Wix.Utils.getViewMode());
             if(mode == 'editor' || mode == 'preview') {
                 jQuery('.placeholder').show();
-                jQuery('.content').html('');
             } else {
                 jQuery('.placeholder').hide();
                 Wix.Data.Public.get('textID', { scope: 'COMPONENT' },
                 function(data) {
                     console.log('data get ', data);
-                    if(data['textID']) {
+                    if(data['textID'] && parseInt(data['textID']) && parseInt(data['textID']) > 0) {
                         window.appsConfig = {
                             "apiDomain": "ru.foodsoul.pro",
                             "position": "topRight",
