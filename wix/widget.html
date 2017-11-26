@@ -49,17 +49,6 @@
             Wix.Styles.getStyleParams(function(data) {
                 console.log('style ', data);
             });
-
-            Wix.addEventListener(Wix.Events.SETTINGS_UPDATED, function (data) {
-                console.log('settings ', data);
-            });
-
-            Wix.addEventListener(Wix.Events.EDIT_MODE_CHANGE, function () {
-                widget.changeContent();
-            });
-            Wix.addEventListener(Wix.Events.PAGE_NAVIGATION, function () {
-                location.reload();
-            });
         }
 
         Widget.prototype.setSize = function(w, h) {
@@ -87,6 +76,21 @@
         }
         //-----------------
         var widget = new Widget();
+
+        Wix.addEventListener(Wix.Events.SETTINGS_UPDATED, function (data) {
+            console.log('settings ', data);
+        });
+
+        Wix.addEventListener(Wix.Events.STYLE_PARAMS_CHANGE, function (data) {
+            console.log('style ', data);
+        });
+
+        Wix.addEventListener(Wix.Events.EDIT_MODE_CHANGE, function () {
+            widget.changeContent();
+        });
+        Wix.addEventListener(Wix.Events.PAGE_NAVIGATION, function () {
+            location.reload();
+        });
 
         jQuery(document).ready(function() {
             widget.initWidget();

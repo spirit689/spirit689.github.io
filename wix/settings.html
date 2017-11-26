@@ -27,7 +27,7 @@
                     var callback = jQuery(this).getCtrl().onChange;
                     if(jQuery.isFunction(callback)) {
                         callback(function (value) {
-                            $self.update($element.attr('wix-param'), value);
+                            $self.update(jQuery(this).attr('wix-param'), value);
                         });
                     }
                 });
