@@ -52,26 +52,12 @@
         }
 
         Widget.prototype.setSize = function(w, h) {
+            console.log('set size' + w + ':' + h);
             Wix.resizeWindow(w, h);
         }
 
-        Widget.prototype.expandSize = function() {
-            console.log('screen', window.screen);
-            console.log('cfg', this.cfg);
-            Wix.resizeComponent({
-                width: window.screen.width,
-                height: window.screen.height
-            });
-        }
-
-        Widget.prototype.restoreSize = function() {
-            Wix.resizeComponent({
-                width: this.cfg.width,
-                height: this.cfg.height
-            });
-        }
-
-        Widget.prototype.changeContent = function () {
+        Widget.prototype.changeContent = function() {
+            var $self = this;
             var mode = Wix.Utils.getViewMode();
             jQuery('body').attr('class', Wix.Utils.getViewMode());
             // console.log('mode ', mode);
@@ -80,17 +66,39 @@
                 jQuery('.content').html('');
             } else {
                 jQuery('.placeholder').hide();
-                Wix.Data.Public.get('textCode', { scope: 'COMPONENT' },
+                Wix.Data.Public.getMulti(['textCode', 'classExpand', 'classRestore'], { scope: 'COMPONENT' },
                 function(data) {
-                    // console.log('data get ', data);
+                    console.log('data get ', data);
                     if(data['textCode']) {
                         jQuery('.content').html(data['textCode']);
                     }
+                    if(data['classExpand']) {
+                        $self.cfg.classExpand = data['classExpand'];
+                    }
+                    if(data['classRestore']) {
+                        $self.cfg.classRestore = data['classRestore'];
+                    }
+                    $self.attachListeners();
                 }, function(f) {
                     console.log('data get error', f);
                     jQuery('.content').html('Something wrong see log :(');
                 });
             }
+        }
+
+        Widget.prototype.attachListeners = function() {
+            var $self = this;
+            jQuery(document).on('click', widget.cfg.classExpand, function(ev) {
+                ev.preventDefault();
+                $self.setSize(window.screen.width, window.screen.height);
+            });
+
+            jQuery(document).on('click', widget.cfg.classRestore, function(ev) {
+                ev.preventDefault();
+                setTimeout(function () {
+                    $self.setSize($self.cfg.width, $self.cfg.height);
+                }, widget.cfg.delay);
+            });
         }
         //-----------------
         var widget = new Widget();
@@ -98,6 +106,14 @@
         Wix.addEventListener(Wix.Events.SETTINGS_UPDATED, function (data) {
             console.log('settings ', data);
             if(data.key == 'textCode') {
+                Wix.Data.Public.set('textCode', data.value, { scope: 'COMPONENT' },
+                function(d){console.log('data set ', d)}, function(f){ console.log('data set error ', f)});
+            }
+            if(data.key == 'classExpand') {
+                Wix.Data.Public.set('textCode', data.value, { scope: 'COMPONENT' },
+                function(d){console.log('data set ', d)}, function(f){ console.log('data set error ', f)});
+            }
+            if(data.key == 'classRestore') {
                 Wix.Data.Public.set('textCode', data.value, { scope: 'COMPONENT' },
                 function(d){console.log('data set ', d)}, function(f){ console.log('data set error ', f)});
             }
@@ -119,17 +135,6 @@
             widget.changeContent();
         });
 
-        jQuery(document).on('click', widget.cfg.classExpand, function(ev) {
-            ev.preventDefault();
-            widget.expandSize();
-        });
-
-        jQuery(document).on('click', widget.cfg.classRestore, function(ev) {
-            ev.preventDefault();
-            setTimeout(function () {
-                widget.restoreSize();
-            }, widget.cfg.delay);
-        });
     </script>
 </head>
 <body>

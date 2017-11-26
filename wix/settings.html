@@ -39,7 +39,37 @@
     </head>
     <body>
         <div wix-ctrl="appSettings"></div>
-        <div id="textInput"
+        <div id="sampleDock" wix-ctrl="Dock"
+            wix-param="widgetPos"
+            wix-options="{title: 'Select position', defaultValue:'TOP_RIGHT'}">
+        </div>
+        <div id="textInputExpand"
+             wix-ctrl="TextInputWithButton"
+             wix-param="classExpand"
+             wix-options="{
+             title: 'HTML',
+             placeholder:'Your text',
+             infoText:'',
+             isMultiLine: 'true',
+             invalidMessage:'Wrong Input!',
+             defaultText:'Widget text',
+             maxLength:512,
+             buttonText: 'OK'}">
+        </div>
+        <div id="textInputRestore"
+             wix-ctrl="TextInputWithButton"
+             wix-param="classRestore"
+             wix-options="{
+             title: 'HTML',
+             placeholder:'Your text',
+             infoText:'',
+             isMultiLine: 'true',
+             invalidMessage:'Wrong Input!',
+             defaultText:'Widget text',
+             maxLength:512,
+             buttonText: 'OK'}">
+        </div>
+        <div id="textInputCode"
              wix-ctrl="TextInputWithButton"
              wix-param="textCode"
              wix-options="{
@@ -50,7 +80,7 @@
              invalidMessage:'Wrong Input!',
              defaultText:'Widget text',
              maxLength:512,
-             buttonText: 'Apply'}">
+             buttonText: 'OK'}">
         </div>
     </body>
 </html>
